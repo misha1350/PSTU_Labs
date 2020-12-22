@@ -1,0 +1,39 @@
+//Вариант 19
+#include <iostream>
+using namespace std;
+
+int a[100];
+int n;
+
+int main()
+{
+	setlocale(LC_ALL, "ru");
+	cout << "Введите N: ";
+	cin >> n;
+
+  //Задача №1 - Нахождение максимального элемента массива
+	for (int i = 1; i <= n; i++)
+	{
+		a[i] = rand() % 100-50;
+		cout << a[i] << " ";
+	}
+	int max = a[1];
+	for (int i = 2; i <= n; i++)  
+	{
+		if (a[i] > a[max])
+		{
+			max = i;
+		}
+	}
+	cout << endl;
+	cout << "Удаление " << max << "-го (максимального) элемента массива:" << endl;
+	for (int i = max; i <= n; i++)
+	{
+		a[i] = a[i + 1];
+	}
+	for (int i = 1; i <= n-1; i++)
+	{
+		cout << a[i] << " ";
+	}
+	cout << endl;
+}
