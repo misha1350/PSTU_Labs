@@ -13,7 +13,7 @@ int main()
 {
 	int size = -1;
 	int x1, x2,k=0;
-	string typeFill = "word";
+	string typeFill = "letter";
 	while (size <= 0)
 	{
 		cout << "Input array size: \n";
