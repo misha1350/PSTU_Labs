@@ -34,6 +34,8 @@ struct film_info {
 void(film_info*& film, int N, k)
 {
 	setlocale(LC_ALL, "ru");
+
+//Здесь должна быть защита от симплтона
 	for (int i = k; i < N; i++)
 	{
 		cout << endl << "Введите название фильма: ";
