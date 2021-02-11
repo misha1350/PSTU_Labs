@@ -1,4 +1,4 @@
-//WIP
+//Всё работает, но код некрасивый, и лишние принты использовались для отладки. Также отсутствует защита от дурака
 
 
 
@@ -30,13 +30,13 @@ struct film_info {
 	}
 };
 
-void movie(film_info*& film, int N, int k)
+void movie(film_info*& film, int N)
 {
 	setlocale(LC_ALL, "ru");
-	for (int i = k; i < N; i++)
+	for (int i = 0; i < N; i++)
 	{
 		cin.ignore();
-		cout << endl << "Введите название фильма №" << i+1 << ": ";
+		cout << endl << "Введите название фильма №" << i + 1 << ": ";
 		getline(cin, film[i].name);
 		cout << "\nВведите ФИ режиссёра: ";
 		getline(cin, film[i].director);
@@ -47,62 +47,92 @@ void movie(film_info*& film, int N, int k)
 	}
 }
 
-void movie_add(film_info*& film_add, int N, int k)
+void movie_add(film_info*& film_add, int nadd)
 {
 	setlocale(LC_ALL, "ru");
-	for (int i = k; i < N; i++)
-	{
+		cin.ignore();
 		cout << endl << "Введите название фильма: ";
-		getline(cin, film_add[i].name);
+		getline(cin, film_add[nadd].name);
 		cout << endl << "Введите ФИ режиссёра: ";
-		getline(cin, film_add[i].director);
+		getline(cin, film_add[nadd].director);
 		cout << endl << "Введите страну: ";
-		getline(cin, film_add[i].country);
+		getline(cin, film_add[nadd].country);
 		cout << endl << "Введите общие кассовые сборы в миллионах долларов: ";
-		cin >> film_add[i].box_office_$M;
-	}
+		cin >> film_add[nadd].box_office_$M;
 }
 
-void erase(film_info*& film, int& N) //Сделать ограничение на менее одного элемента - элементов будет вводиться не менее 5
+void erase(film_info*& film, film_info*& film_erase, int& N)
 {
-	for (int i = N - 2; i < N; i++) // Цикл удаления элемента с конца совершится два раза
+	for (int i = 0; i < N - 2; i++) // Цикл удаления элемента с конца совершится два раза
 	{
-		film[i].name = film[i + 2].name;
-		film[i].director = film[i + 2].director;
-		film[i].country = film[i + 2].country;
-		film[i].box_office_$M = film[i + 2].box_office_$M;
+		film_erase[i].name = film[i].name;
+		film_erase[i].director = film[i].director;
+		film_erase[i].country = film[i].country;
+		film_erase[i].box_office_$M = film[i].box_office_$M;
 	}
-	N = N - 2;
+	for (int i = 0; i < N - 2; i++)
+	{
+		cout << "\n\n";
+		film_erase[i].Print();
+		cout << "\n";
+	}
+	int Na;
+	Na = N - 2;
 }
 
-void add(film_info*& film, film_info*& film_add , int& N) // Выходит за рамки массива
+void add(film_info*& film_erase, film_info*& film_add, film_info*& film, int& N, int& Na) // Выходит за рамки массива
 {
-	bool f = 0;
-	string namesearch;
+	int target_number = 0;
+	string target_name;
 	cout << "\n\nВведите название фильма, после которого надо добавить элемент: ";
-	cin >> namesearch;
+	cin >> target_name;
 	for (int i = 0; i < N; i++)
 	{
-		if (film[i].name == namesearch)
+		if (film_erase[i].name == target_name)
 		{
-			f = true;
-			for (int j = 0; j < i; j++)
+			target_number = i;
+			for (int j = 0; j <= i; j++) // В новый третий массив записываются все значения до нового добавленного элемента
 			{
-				film_add[j].name = film[j].name;
-				film_add[j].director = film[j].director;
-				film_add[j].country = film[j].country;
-				film_add[j].box_office_$M = film[j].box_office_$M;
+				film_add[j].name = film_erase[j].name;
+				film_add[j].director = film_erase[j].director;
+				film_add[j].country = film_erase[j].country;
+				film_add[j].box_office_$M = film_erase[j].box_office_$M;
+			}
+			for (int k = 0; k < Na + 1; k++)
+			{
+				cout << "\n\n";
+				film_add[k].Print();
+				cout << "\n";
 			}
 			cout << "\n\nВведите данные нового фильма.";
-			movie_add(film_add, i + 1, i);
-			for (int j = i + 1; j < N + 1; j++)
+			int nadd = target_number + 1;
+			movie_add(film, nadd + 1);
+			
+			for (int k = 0; k < Na + 1; k++)
 			{
-				film_add[j] = film[j + 1];
+				cout << "\n\n";
+				cout << i;
+				film_add[k].Print();
+				cout << "\n";
+			}
+			for (int l = i + 2; l < Na + 1; l++)
+			{
+				film_add[l].name = film_erase[l].name;
+				film_add[l].director = film_erase[l].director;
+				film_add[l].country = film_erase[l].country;
+				film_add[l].box_office_$M = film_erase[l].box_office_$M;
 			}
 			i = N;
+			for (int k = 0; k < Na + 1; k++)
+			{
+				cout << i << "\n";
+				cout << "\n\n";
+				film_add[k].Print();
+				cout << "\n";
+			}
 		}
 	}
-	if (f == 0)
+	if (target_number == 0)
 	{
 		cout << "Название не найдено.\n";
 	}
@@ -112,16 +142,19 @@ int main()
 {
 	setlocale(LC_ALL, "ru");
 	int N;
-		cout << "Введите количество элементов (фильмов): ";
+	cout << "Введите количество элементов (фильмов): ";
 	cin >> N;
+	int Na = N - 2;
+	cout << Na;
 	film_info* film = new film_info[N];
-	film_info* film_add = new film_info[N + 1];
-	movie(film, N, 0);
-	// !!!! Вылетает тут: erase(film, N);
+	film_info* film_erase = new film_info[N - 2];
+	film_info* film_add = new film_info[Na + 1];
+	movie(film, N);
+	erase(film, film_erase, N);
 	if (N != 0)
 	{
-		// !!!! Вылетает тут: add(film, film_add, N);
-		for (int i = 0; i < N + 1; i++)
+		add(film_erase, film_add, film, N, Na);
+		for (int i = 0; i < Na + 1; i++)
 		{
 			cout << "\n\n";
 			film_add[i].Print();
