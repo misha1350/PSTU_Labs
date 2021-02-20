@@ -25,44 +25,44 @@ int Wordcount(string line, int value)
     }
     return count;
 }
-void Line_splitting(string* NewSTR, string line, int count)
+void Line_splitting(string* wordstring, string line, int count)
 {
     int j = 0;
     for (int i = 0; i < count; i++)
     {
-        NewSTR[i] = "";
+        wordstring[i] = "";
         while (line[j] == ' ') 
         {
             j++;
         }
         while (line[j] != ' ' && line[j] != '\n' && line[j] != '\0')
         {
-            NewSTR[i] += line[j++];
+            wordstring[i] += line[j++];
         }
     }
 }
-int foo(string* NewSTR, int count, bool& flag)
+int foo(string* wordstring, int count, bool& flag)
 {
     int num;
     for (int i = 0; i < count; i++)
     {
-        if (NewSTR[i+1] == NewSTR[0])
+        if (wordstring[i+1] == wordstring[0])
         {
             flag = true;
         }
     }
     return flag;
 }
-int foo2(string* NewSTR, int count, string cons, int& conscount)
+int foo2(string* wordstring, int count, string cons, int& conscount)
 {
   conscount = 0;
   for (int i = 0; i < count; i++)
   {
-    for (int j = 0; j < NewSTR[i].length(); j++)
+    for (int j = 0; j < wordstring[i].length(); j++)
     {
       for (int l = 0; l < 20; l++)
       {
-        if (NewSTR[i][j] == cons[l])
+        if (wordstring[i][j] == cons[l])
         {
           conscount++;
         }
@@ -91,10 +91,10 @@ int main()
             getline(If, line);
             value = line.length();  
             count = Wordcount(line, value); //количество слов в строке
-            string* NewSTR = new string[count];
-            Line_splitting(NewSTR, line, count);
-            numMax = foo(NewSTR, count, flag);
-            conscount = foo2(NewSTR, count, cons, conscount);
+            string* wordstring = new string[count];
+            Line_splitting(wordstring, line, count);
+            numMax = foo(wordstring, count, flag);
+            conscount = foo2(wordstring, count, cons, conscount);
             if (flag != true)
             {
                 Of << line << endl;
