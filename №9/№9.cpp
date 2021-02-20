@@ -41,7 +41,7 @@ void Line_splitting(string* wordstring, string line, int count)
         }
     }
 }
-int foo(string* wordstring, int count, bool& flag)
+int similarity(string* wordstring, int count, bool& flag)
 {
     int num;
     for (int i = 0; i < count; i++)
@@ -53,7 +53,7 @@ int foo(string* wordstring, int count, bool& flag)
     }
     return flag;
 }
-int foo2(string* wordstring, int count, string cons, int& conscount)
+int consonants(string* wordstring, int count, string cons, int& conscount)
 {
   conscount = 0;
   for (int i = 0; i < count; i++)
@@ -93,8 +93,8 @@ int main()
             count = Wordcount(line, value); //количество слов в строке
             string* wordstring = new string[count];
             Line_splitting(wordstring, line, count);
-            numMax = foo(wordstring, count, flag);
-            conscount = foo2(wordstring, count, cons, conscount);
+            numMax = similarity(wordstring, count, flag);
+            conscount = consonants(wordstring, count, cons, conscount);
             if (flag != true)
             {
                 Of << line << endl;
