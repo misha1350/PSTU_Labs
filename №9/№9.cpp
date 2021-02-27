@@ -35,7 +35,7 @@ void Line_splitting(string* wordstring, string line, int count)
         {
             j++;
         }
-        while (line[j] != ' ' && line[j] != '\n' && line[j] != '\0')
+        while (line[j] != ' ' && line[j] != '\n' && line[j] != '\0' && line[j] != '(' && line[j] != ')' && line [j] != ',') 
         {
             wordstring[i] += line[j++];
         }
