@@ -1,6 +1,3 @@
-// WIP
-
-
 // 19. ФИО, дата рождения, №паспорта. Ключ - №паспорта.
 
 #include <iostream>
@@ -37,7 +34,11 @@ void fill_out(vector<str> &citizen, int n)
 {
   citizen.clear();
   ifstream name1("name.txt");
+  ifstream surname1("surname.txt");
+  ifstream last_name("last_name.txt");
   string name2[35];
+  string surname2[73];
+  string last_name2[34];
   int p1, p2;
   for (int i = 0; i < 35; i++)
   {
@@ -45,17 +46,33 @@ void fill_out(vector<str> &citizen, int n)
     name1 >> data;
     name2[i] = data;
   }
+  for (int i = 0; i < 73; i++)
+  {
+    string data;
+    surname1 >> data;
+    surname2[i] = data;
+  }
+  for (int i = 0; i < 34; i++)
+  {
+    string data;
+    last_name >> data;
+    last_name2[i] = data;
+  }
   name1.close();
-  str test;
+  surname1.close();
+  last_name.close();
+  str temp;
   for (int i = 0; i < n; i++)
   {
     p1 = throw_me_some_numbers(4000, 4999);
     p2 = throw_me_some_numbers(100000, 999999);
-    test.name = name2[throw_me_some_numbers(1, 34)];
-    test.pos = i + 1;
-    test.passport_region = std::to_string(p1);
-    test.passport_no = std::to_string(p2);
-    citizen.push_back(test);
+    temp.name = name2[throw_me_some_numbers(0, 34)];
+    temp.name = temp.name + ' ' + surname2[throw_me_some_numbers(0, 72)];
+    temp.name = temp.name + ' ' + last_name2[throw_me_some_numbers(0, 33)];
+    temp.pos = i + 1;
+    temp.passport_region = std::to_string(p1); //std'шный быстрее stringstream'овского, хорошая практика
+    temp.passport_no = std::to_string(p2);
+    citizen.push_back(temp);
   }
 }
 
@@ -159,11 +176,11 @@ int main()
   setlocale(LC_ALL, "ru");  
   vector<str> citizen;
   int command = 10, n = -1;
-  bool cancel = 0;
+  bool cancel = 0, to_be_deleted = 0;
   cout << "\nЛабораторная работа №12: Поиск данных.";
   while (command != 0)
   {
-    cout << "\n\n\nВведите команду:\n1. Заполнение списка\n5. Линейный поиск\n6.Поиск подстроки в строке\n7. Сохранение изменений\n0.Стоп:\t";
+    cout << "\n\n\nВведите команду:\n1. Заполнение списка\n2. Удаление списка\n5. Линейный поиск\n6. Поиск подстроки в строке\n7. Сохранение изменений\n0. Стоп:\t";
     cin >> command;
     if (command == 1)
     {
@@ -186,6 +203,44 @@ int main()
         cout << "\nОшибка. Для заполнения списка нужен хотя-бы один человек.\n\n";
         }
       }
+      if (n > 0)
+      {
+        cout << "\n\nСписок заполнен. Если хотите заполнить новый список, удалите его.";
+      }
+    }
+    if (command == 2)
+    {
+      if (n > 0)
+      {
+        cout << "\n\n\n *****Удаление списка*****\n\n\n";
+        char prompt;
+        do
+        {
+          prompt = 'n';
+          int confirm, verify;
+          cout << "\n\t\t\tВы уверены, что хотите удалить список? (y/n)\t";
+          cin >> prompt;
+          while (prompt == 'y')
+          {
+            verify = std::stoi(citizen[throw_me_some_numbers(0, n-1)].passport_no);
+            cout << "\nДля подтверждения удаления введите данный номер паспорта:\n\t" << verify << "\n\t";
+            cin >> confirm;
+            if (confirm == verify)
+            {
+              to_be_deleted = true;
+              cout << "\n\tСписок удалён...";
+              prompt = 'n';
+            }
+            else 
+            {
+             cout << "\n\tНеправильно введён номер паспорта. Повторить попытку? (y/n)\t";
+             cin >> prompt;
+            }
+          }
+        }
+        while (!cin.fail() && prompt != 'n');
+      }
+      else { cout << "\nСписка нет."; }
     }
     if (command == 5)
     {
@@ -196,7 +251,7 @@ int main()
         {
           prompt = 'n';
           string search_region, search_no;
-          cout << "\n\n\n ***Линейный поиск по паспортным данным***\n\n\n" << "Введите номер серии паспорта (первые 4 красные цифры. Пробел ставить не нужно.):\t";
+          cout << "\n\n\n *****Линейный поиск по паспортным данным*****\n\n\n" << "Введите номер серии паспорта (первые 4 красные цифры. Пробел ставить не нужно.):\t";
           cin >> search_region;
           cout << "\nТеперь введите номер паспорта (остальные 6 цифр):\t";
           cin >> search_no;
@@ -206,7 +261,7 @@ int main()
         }
         while (!cin.fail() && prompt != 'n');
       }
-      else { cout << "Для начала заполните список."; }
+      else { cout << "\nДля начала заполните список."; }
     }
     if (command == 6)
     {
@@ -248,6 +303,7 @@ int main()
           }
         while (!cin.fail() && prompt != 'n');
         }
+        else { cout << "\nДля начала заполните список."; }
       }
     }
       if (command == 7)
@@ -257,14 +313,10 @@ int main()
           save(citizen, n); 
         }
         else 
-        { 
-          cout << "\nСохранить невозможно. Сначала надо заполнить список.\n\n";
-        }
+        { cout << "\nСохранить невозможно. Сначала надо заполнить список."; }
       }
-      if (cancel == true)
-      {
-        n = -1;
-      }
+      if (cancel == true) {n = -1; cancel = false;}
+      if (to_be_deleted == true) {n = -1; to_be_deleted = false;}
     }
     cout << "\n\n\n\nВыход из программы...";
     return 0;
