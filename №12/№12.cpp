@@ -124,40 +124,34 @@ void line_search (vector<str> citizen, int n, string search_region, string searc
 
 void substring_search(vector<str> citizen, string str2, string sub, bool flag, int n, int int_prompt)
 {
-  int str_length, sub_length, count = 0;
-  sub_length = sub.size();
+  int count = 0;
   for (int i = 0; i < n; i++)
   {
     if (int_prompt == 1)
     {
-    str2 = citizen[i].passport_region;
+      str2 = citizen[i].passport_region;
     }
     else 
     {
       str2 = citizen[i].passport_no;
     }
-    str_length = str2.size();
-    cout << "\nstr2 [" << i << "] = " << str2;
-    cout << "\t\tstr_length [" << i << "] = " << str_length;
-    if (str_length > 0 && sub_length > 0)
+    if (str2.size() > 0 && sub.size() > 0)
     {
-      for (int l = 0; l < str_length - sub_length + 1; l++)
+      for (int l = 0; l < str2.size() - sub.size() + 1; l++)
       {
-        if (str2[l] == sub[0])
+        if (str2[l] == sub[l])
         {
-          for (int j = 0; j < sub_length; j++)
+          for (int j = 0; j < sub.size(); j++)
           {
-            if (sub [j] == str2[l+j])
-            {
+            if (sub[j] == str2[l+j]) {
               count++;
             }
           }
-          cout << "\t\tcount =" << count;
-          if (count == sub_length) //Если счётчик подходящих символов равен длине подстроки, т.е. подстрока полностью сочетается со строкой
+          if (count == sub.size()) //Если счётчик подходящих символов равен длине подстроки, т.е. подстрока полностью сочетается со строкой
           {
             flag = true;
             cout << "\n\nПодстрока есть в строке. Элемент:\n" << citizen[i].pos << endl << citizen[i].name << endl << citizen[i].passport_region << endl << citizen[i].passport_no << endl;
-            l = str_length; //Выходим из l-го for'а, не используя break
+            l = str2.size(); //Выходим из l-го for'а, не используя break
             i = n; //Выходим из i-го for'a
           }
         }
