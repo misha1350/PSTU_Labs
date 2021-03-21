@@ -9,25 +9,25 @@ employee::employee()
 	FullName = "";
 	Occupation = "";
 	Salary = 0;
-	cout << "Êîíñòðóêòîð áåç ïàðàìåòðîâ äëÿ îáúåêòà" << this << endl;
+	cout << "ÐšÐ¾Ð½ÑÑ‚Ñ€ÑƒÐºÑ‚Ð¾Ñ€ Ð±ÐµÐ· Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ð¾Ð² Ð´Ð»Ñ Ð¾Ð±ÑŠÐµÐºÑ‚Ð° " << this << endl;
 }
 employee::employee(string a, string b, double c)
 {
 	FullName = a;
 	Occupation = b;
 	Salary = c;
-	cout << "Êîíñòðóêòîð ñ ïàðàìåòðàìè äëÿ îáúåêòà" << this << endl;
+	cout << "ÐšÐ¾Ð½ÑÑ‚Ñ€ÑƒÐºÑ‚Ð¾Ñ€ Ñ Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ð°Ð¼Ð¸ Ð´Ð»Ñ Ð¾Ð±ÑŠÐµÐºÑ‚Ð° " << this << endl;
 }
 employee::employee(const employee &t)
 {
 	FullName = t.FullName;
 	Occupation = t.Occupation;
 	Salary = t.Salary;
-	cout << "Êîíñòðóêòîð êîïèðîâàíèÿ äëÿ îáúåêòà" << this << endl;
+	cout << "ÐšÐ¾Ð½ÑÑ‚Ñ€ÑƒÐºÑ‚Ð¾Ñ€ ÐºÐ¾Ð¿Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ñ Ð´Ð»Ñ Ð¾Ð±ÑŠÐµÐºÑ‚Ð° " << this << endl;
 }
 employee::~employee()
 {
-	cout << "Äåñòðóêòîð äëÿ îáúåêòà" << this << endl;
+	cout << "Ð”ÐµÑÑ‚Ñ€ÑƒÐºÑ‚Ð¾Ñ€ Ð´Ð»Ñ Ð¾Ð±ÑŠÐµÐºÑ‚Ð° " << this << endl;
 }
 string employee::get_FullName()
 {
@@ -55,7 +55,7 @@ void employee::set_Salary(double c)
 }
 void employee::print()
 {
-	cout << "ÔÈÎ: " << FullName << endl;
-	cout << "Äîëæíîñòü: " << Occupation << endl;
-	cout << "Çàðïëàòà: " << Salary << endl;
+	cout << "Ð¤Ð˜Ðž: " << FullName << endl;
+	cout << "Ð”Ð¾Ð»Ð¶Ð½Ð¾ÑÑ‚ÑŒ: " << Occupation << endl;
+	cout << "Ð—Ð°Ñ€Ð¿Ð»Ð°Ñ‚Ð°: " << Salary << endl;
 }
