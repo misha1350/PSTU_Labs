@@ -5,8 +5,8 @@
 using namespace std;
 
 /*
-Вариант 9 (19)
-Пользовательский класс Сотрудник. ФИО - string, должность - string, зарплата - double.
+Р’Р°СЂРёР°РЅС‚ 9 (19)
+РџРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРёР№ РєР»Р°СЃСЃ РЎРѕС‚СЂСѓРґРЅРёРє. Р¤РРћ - string, РґРѕР»Р¶РЅРѕСЃС‚СЊ - string, Р·Р°СЂРїР»Р°С‚Р° - double.
 */
 
 employee hire_employee()
@@ -14,9 +14,9 @@ employee hire_employee()
 	string d;
 	string e;
 	double f;
-	cout << "ФИО сотрудника - "; cin >> d;
-	cout << "Должность сотрудника - "; cin >> e;
-	cout << "Зарплата сотрудника - "; cin >> f;
+	cout << "Р¤РРћ СЃРѕС‚СЂСѓРґРЅРёРєР° - "; cin >> d;
+	cout << "Р”РѕР»Р¶РЅРѕСЃС‚СЊ СЃРѕС‚СЂСѓРґРЅРёРєР° - "; cin >> e;
+	cout << "Р—Р°СЂРїР»Р°С‚Р° СЃРѕС‚СЂСѓРґРЅРёРєР° - "; cin >> f;
 	employee t(d, e, f);
 	return t;
 }
@@ -28,13 +28,13 @@ void print_employee(employee t)
 int main()
 {
 	setlocale(LC_ALL, "ru");
-	employee t1; //Конструктор без параметров
+	employee t1; //РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ Р±РµР· РїР°СЂР°РјРµС‚СЂРѕРІ
 	t1.print();
-	employee t2("Иваныч", "Сисадмин", 60000);
+	employee t2("РРІР°РЅС‹С‡", "РЎРёСЃР°РґРјРёРЅ", 60000);
 	t2.print();
 	employee t3 = t2;
-	t3.set_FullName("Димдимыч");
-	t3.set_Occupation("Директор сервисного центра");
+	t3.set_FullName("Р”РёРјРґРёРјС‹С‡");
+	t3.set_Occupation("Р”РёСЂРµРєС‚РѕСЂ СЃРµСЂРІРёСЃРЅРѕРіРѕ С†РµРЅС‚СЂР°");
 	t3.set_Salary(90000);
 	print_employee(t3);
 	t1 = hire_employee();
