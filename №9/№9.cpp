@@ -79,7 +79,7 @@ int main()
     ofstream Of("F2.txt");
     string line;
     string cons = "bcdfghjklmnpqrstvwxz";
-    int value, numMax = 0, count, num = 0, kol = 0, kol2 = 0, conscount = 0, true_conscount = 0;
+    int value, numMax = 0, count, num = 0, kol = 0, kol2 = 0, conscount = 0;
     bool flag;
     if (!If.is_open())
     {
@@ -95,18 +95,17 @@ int main()
             string* wordstring = new string[count];
             Line_splitting(wordstring, line, count);
             numMax = similarity(wordstring, count, flag);
-            conscount = consonants(wordstring, count, cons, conscount);
             if (flag != true)
             {
                 Of << line << endl;
                 kol++;
-                true_conscount = conscount;
+                conscount = consonants(wordstring, count, cons, conscount);
             }
             flag = 0; //сброс флага, если он стал true
         }
         if(If.eof())
         {
-        cout << "\nКоличество согласных букв в последней строке: " << true_conscount << endl;
+        cout << "\nКоличество согласных букв в последней строке: " << conscount << endl;
         }
     }
     If.close();
