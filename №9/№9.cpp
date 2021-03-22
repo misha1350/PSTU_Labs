@@ -49,6 +49,7 @@ int similarity(string* wordstring, int count, bool& flag)
         if (wordstring[i+1] == wordstring[0])
         {
             flag = true;
+            i = count; //Выход из цикла без break'а
         }
     }
     return flag;
