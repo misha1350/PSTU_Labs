@@ -43,7 +43,6 @@ void Line_splitting(string* wordstring, string line, int count)
 }
 int similarity(string* wordstring, int count, bool& flag)
 {
-    int num;
     for (int i = 0; i < count; i++)
     {
         if (wordstring[i+1] == wordstring[0])
@@ -79,7 +78,7 @@ int main()
     ofstream Of("F2.txt");
     string line;
     string cons = "bcdfghjklmnpqrstvwxz";
-    int value, numMax = 0, count, num = 0, kol = 0, kol2 = 0, conscount = 0;
+    int value, count, conscount = 0;
     bool flag;
     if (!If.is_open())
     {
@@ -94,11 +93,10 @@ int main()
             count = Wordcount(line, value); //количество слов в строке
             string* wordstring = new string[count];
             Line_splitting(wordstring, line, count);
-            numMax = similarity(wordstring, count, flag);
+            similarity(wordstring, count, flag);
             if (flag != true)
             {
                 Of << line << endl;
-                kol++;
                 conscount = consonants(wordstring, count, cons, conscount);
             }
             flag = 0; //сброс флага, если он стал true
