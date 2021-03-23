@@ -99,7 +99,10 @@ int main()
   setlocale (LC_ALL, "ru");
   int size;
   cout << "Введите размер списка:\t";
-  cin >> size;
+  while (size < 1) 
+  {
+    cin >> size;
+  }
 
   node* node = make(size);
   cout << "\nВаш список:\n";
