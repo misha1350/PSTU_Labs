@@ -7,7 +7,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <stack>
 
 using namespace std;
 
@@ -15,6 +14,11 @@ struct list
 {
     string river;
     int river_length;
+};
+
+enum menu {
+  Shell = 1,
+  Quick
 };
 
 void fill_out(vector<list>& river_systems, int n)
@@ -48,7 +52,7 @@ void Shellsort(vector<list>& river_systems, int n)
                 }
                 else
                 {
-                    break; //потом поменять на j = step
+                    j = step;
                 }
             }
             river_systems[j].river = temp1;
@@ -110,7 +114,7 @@ int main()
 
     switch (choice)
     {
-    case 1:
+    case Shell:
     {
         Shellsort(river_systems, n);
         cout << "\n\nРезультат:";
@@ -120,7 +124,7 @@ int main()
         }
         break;
     }
-    case 2:
+    case Quick:
     {
         Quicksort(river_systems, 0, n - 1);
         cout << "\n\nРезультат:";
