@@ -105,71 +105,9 @@ void save(vector<str> citizen, int n)
   cout << "\nФайл сохранён.";
 }
 
-void line_search (vector<str> citizen, int n, string search_region, string search_no)
-{
-  bool success = 0;
-  for (int i = 0; i < n; i++)
-  {
-    if (citizen[i].passport_region == search_region && citizen[i].passport_no == search_no)
-    {
-      success = true;
-      cout << "\nЭлемент находится под " << i+1 << "-ым номером множества";
-    }
-  }
-  if (success != true)
-  {
-    cout << "\nЭлемент не найден.";
-  }
-}
-
-void substring_search(vector<str> citizen, string str2, string sub, bool success, int n, int int_prompt) 
-{
-  int count = 0;
-  for (int i = 0; i < n; i++)
-  {
-    if (int_prompt == 1)
-    {
-      str2 = citizen[i].passport_region;
-    }
-    else 
-    {
-      str2 = citizen[i].passport_no;
-    }
-    if (str2.size() > 0 && sub.size() > 0)
-    {
-      for (int l = 0; l < str2.size() - sub.size() + 1; l++)
-      {
-        if (str2[l] == sub[l])
-        {
-          for (int j = 0; j < sub.size(); j++)
-          {
-            if (sub[j] == str2[l+j]) {
-              count++;
-            }
-          }
-          if (count == sub.size()) //Если счётчик подходящих символов равен длине подстроки, т.е. подстрока полностью сочетается со строкой
-          {
-            success = true;
-            cout << "\n\nПодстрока есть в строке. Элемент:\n" << citizen[i].pos << endl << citizen[i].name << endl << citizen[i].passport_region << endl << citizen[i].passport_no << endl;
-            l = str2.size(); //Выходим из l-го for'а, не используя break
-            i = n; //Выходим из i-го for'a
-          }
-        }
-      }
-    }
-    count = 0;
-  }
-  if (success != true)
-  {
-    cout << "\nПодстрока не найдена в строке.";
-  }
-}
-
-
 void KMP (vector<str> citizen, string str2, string sub, bool success, int n, int int_prompt)
 // str2 - строка, sub - подстрока, которая вводится пользователем
 {
-  int count = 0;
   for (int i = 0; i < n; i++)
   {
     if (int_prompt == 1) {
@@ -213,6 +151,47 @@ void KMP (vector<str> citizen, string str2, string sub, bool success, int n, int
   }
 }
 
+bool BM (string str2, string sub, bool success, int n, int int_prompt, int i, vector<str> citizen)
+{
+  int subsize = sub.size();
+  int arr[256];
+  int str2size, pos, j;
+  
+    if (int_prompt == 1) {
+      str2 = citizen[i].passport_region;
+    }
+    else {
+      str2 = citizen[i].passport_no;
+    }
+    str2size = str2.size();
+  for (j = 0; j < 256; j++) {
+      arr[j] = str2size;
+    }
+  for (j = subsize - 1; j >= 0; j--) {
+    if ((arr[(short)(sub[j])]) == subsize) {
+      (arr[(short)(sub[j])]) = subsize - j - 1;
+    }
+  }
+  pos = subsize - 1;
+  while (pos < str2size) {
+    if (sub[subsize - 1] != str2[pos]) {
+      pos += arr[(short)(str2[pos])];
+    }
+    else 
+      for (j = subsize - 1; j >= 0; j--) {
+      if (sub[j] != str2[pos - subsize + j + 1]) {
+        pos += arr[(short)(str2[pos])];
+        break;
+      }
+      else if (j == 0) {
+        pos = str2size;
+        success = true;
+      }
+    }
+  }
+return success;
+}
+
 int main()
 {
   setlocale(LC_ALL, "ru");  
@@ -222,7 +201,7 @@ int main()
   cout << "\nЛабораторная работа №14: Поиск данных 2: Electric boogaloo";
   while (command != 0)
   {
-    cout << "\n\n\nВведите команду:\n1. Заполнение списка\n2. Удаление списка\n3. Поиск алгоритмом Кнутта-Морриса-Пратта\n5. Линейный поиск\n6. Поиск подстроки в строке\n7. Сохранение изменений\n0. Стоп:\t";
+    cout << "\n\n\nВведите команду:\n1. Заполнение списка\n2. Удаление списка\n3. Поиск алгоритмом Кнутта-Морриса-Пратта\n7. Сохранение изменений\n0. Стоп:\t";
     cin >> command;
     if (command == 1)
     {
@@ -307,7 +286,7 @@ int main()
           {
             cout << "\nВведите от 1 до 6 цифр искомого номера паспорта:\t";
             cin >> sub;
-            substring_search(citizen, str2, sub, success, n, int_prompt);
+            KMP(citizen, str2, sub, success, n, int_prompt);
           }
           else if (int_prompt == 0)
           { prompt = 'n'; cancel = true;}
@@ -317,7 +296,7 @@ int main()
           }
           if (cancel != true)
           {
-            cout << "\n\nПовторить линейный поиск? (y/n)\t";
+            cout << "\n\nПовторить поиск? (y/n)\t";
             cin >> prompt;
           }
           cancel = false;
@@ -326,70 +305,62 @@ int main()
       }
       else { cout << "\nУ вас не заполнен список."; }
     }
-
-    if (command == 5)
+    if (command == 4)
     {
-      if (n > 0) 
+      if (n > 0)
       {
         char prompt;
         do
         {
           prompt = 'n';
-          string search_region, search_no;
-          cout << "\n\n\n *****Линейный поиск по паспортным данным*****\n\n\n" << "Введите номер серии паспорта (первые 4 красные цифры. Пробел ставить не нужно.):\t";
-          cin >> search_region;
-          cout << "\nТеперь введите номер паспорта (остальные 6 цифр):\t";
-          cin >> search_no;
-          line_search (citizen, n, search_region, search_no);
-          cout << "\n\nПовторить линейный поиск? (y/n)\t";
-          cin >> prompt;
-        }
-        while (!cin.fail() && prompt != 'n');
-      }
-      else { cout << "\nДля начала заполните список."; }
-    }
-    if (command == 6)
-    {
-      char prompt;
-      int int_prompt;
-      {
-         if (n > 0) 
-        {
-          do
+          int int_prompt;
+          bool success;
+          string str2, sub;
+          cout << "\n\n\n *****Поиск по паспортным данным алгоритмом Бойера-Мура*****\n\n\n" << "Что вы хотите найти?\n1. Строку по серии паспорта\n2. Строку по номеру паспорта\n0. Отмена\t";
+          cin >> int_prompt;
+          if (int_prompt == 1)
           {
-            string str2, sub;
-            bool success;
-            cout << "\n\n\n *****Прямой поиск строки по паспортным данным*****\n\n\n" << "Что вы хотите найти?\n1. Строку по серии паспорта\n2. Строку по номеру паспорта\n0. Отмена\t";
-            cin >> int_prompt;
-            if (int_prompt == 1)
-            {
-              cout << "\nВведите от 1 до 4 цифр искомой серии паспорта:\t";
-              cin >> sub;
-              substring_search(citizen, str2, sub, success, n, int_prompt);
+            cout << "\nВведите от 1 до 4 цифр искомой серии паспорта:\t";
+            cin >> sub;
+            for (int i = 0; i < n; i++) {
+              success = BM(citizen[i].passport_region, sub, success, n, int_prompt, i, citizen);
+              if (success == true) {
+                cout << "\n\nПодстрока есть в строке. Элемент:\n" << citizen[i].pos << endl << citizen[i].name << endl << citizen[i].passport_region << endl << citizen[i].passport_no << endl;
+                i = n;
+              }
             }
-            else if (int_prompt == 2)
-            {
-              cout << "\nВведите от 1 до 6 цифр искомого номера паспорта:\t";
-              cin >> sub;
-              substring_search(citizen, str2, sub, success, n, int_prompt);
-            }
-            else if (int_prompt == 0)
-            { prompt = 'n'; cancel = true;}
-            else
-            {
-              cout << "\nНеправильный выбор.";
-            }
-            if (cancel != true)
-            {
-              cout << "\n\nПовторить линейный поиск? (y/n)\t";
-              cin >> prompt;
-            }
-            cancel = false;
+              if (success != true) {
+                cout << "\nПодстрока не найдена в строке.";
+              }
           }
-        while (!cin.fail() && prompt != 'n');
+          else if (int_prompt == 2)
+          {
+            cout << "\nВведите от 1 до 6 цифр искомого номера паспорта:\t";
+            cin >> sub;
+            for (int i = 0; i < n; i++) {
+              success = BM(citizen[i].passport_no, sub, success, n, int_prompt, i, citizen);
+              if (success == true) {
+                cout << "\n\nПодстрока есть в строке. Элемент:\n" << citizen[i].pos << endl << citizen[i].name << endl << citizen[i].passport_region << endl << citizen[i].passport_no << endl;
+                i = n;
+              }
+            }
+          }
+          else if (int_prompt == 0)
+          { prompt = 'n'; cancel = true;}
+          else
+          {
+            cout << "\nНеправильный выбор.";
+          }
+          if (cancel != true)
+          {
+            cout << "\n\nПовторить поиск? (y/n)\t";
+            cin >> prompt;
+          }
+          cancel = false;
         }
-        else { cout << "\nДля начала заполните список."; }
+        while (!cin.fail() && prompt != 'n');
       }
+      else { cout << "\nУ вас не заполнен список."; }
     }
       if (command == 7)
       {
