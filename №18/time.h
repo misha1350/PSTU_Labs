@@ -13,19 +13,22 @@ public:
     void mins(int);
     void secs(int);
 
-    /// Перегруженные операции
     Time& operator++();
-    Time operator++(int); // Постфиксная операция
+    Time operator++(int); 
     Time operator+(int);
+    bool operator==(const Time& other);
+    bool operator!=(const Time& other);
+    bool operator<(const Time& other);
+    bool operator>(const Time& other);
 };
 
 Time::Time(void):triad() {}
 Time::~Time(void) {}
 Time::Time(int Hrs, int Mins, int Secs):triad(Hrs, Mins, Secs) {}
-Time::Time(const Time &D) {
-    first = D.first;
-    second = D.second;
-    third = D.third;
+Time::Time(const Time &other) {
+    this->first = other.first;
+    this->second = other.second;
+    this->third = other.third;
 }
 
 
@@ -66,6 +69,19 @@ Time Time::operator+(int days) {
     return t;
 }
 
+bool Time::operator==(const Time& other) {
+  return this->first == other.first && this->second == other.second && this->third == other.third;
+}
+bool Time:: operator != (const Time& other) {
+  return !(this->first == other.first && this->second == other.second && this->third == other.third);
+}
+bool Time:: operator < (const Time& other) {
+  return this->first < other.first&& this->second < other.second&& this->third < other.third;
+}
+bool Time:: operator > (const Time& other) {
+  return this->first > other.first && this->second > other.second && this->third > other.third;
+}
+
 void Time::hrs(int Hrs) {
     first = Hrs;
 }
@@ -77,3 +93,12 @@ void Time::mins(int Mins) {
 void Time::secs(int Secs) {
     third = Secs;
 }
+
+/*Базовый класс:
+Тройка чисел(triad)
+Первое число(first) - int
+Второе число(second) - int
+Третье число(third) - int
+1. Определить методы изменения полей и сравнения триады
+2. Создать произвольный класс time с полями часы, минуты и секунды
+3. Определить полный набор операций сравнения  временных промежутков*/
