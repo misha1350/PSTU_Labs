@@ -1,9 +1,8 @@
 #include <iostream>
-
-using namespace std;
-
 #include "triad.h"
 #include "time.h"
+
+using namespace std;
 
 int main() {
   Time a(2020, 10, 25);
