@@ -1,15 +1,6 @@
 #pragma once
 #include <iostream>
 
-/*Базовый класс:
-Тройка чисел(triad)
-Первое число(first) - int
-Второе число(second) - int
-Третье число(third) - int
-1. Определить методы изменения полей и сравнения триады
-2. Создать произвольный класс time с полями часы, минуты и секунды
-3. Определить полный набор операций сравнения авременных промежутков*/
-
 class triad
 {
 public:
@@ -25,8 +16,9 @@ public:
 	void set_first(int);
 	void set_second(int);
 	void set_third(int);
-
+  void set_triad(int, int, int);
 	triad& operator=(const triad&);
+  bool operator==(const triad&);
 	
 	friend istream& operator>>(istream& in, triad& t);
 	friend ostream& operator<<(ostream& out, const triad& t);
@@ -42,20 +34,38 @@ triad::triad()
     second = 0;
     third = 0;
 }
-triad::~triad()
+triad::~triad() {}
+// triad::triad(int a, int b, int c)
+// {
+//     first = a;
+//     second = b;
+//     third = c;
+// }
+triad::triad(int first, int second, int third)
 {
-}
-triad::triad(int a, int b, int c)
-{
-    first = a;
-    second = b;
-    third = c;
+this->first = first;
+this->second = second;
+this->third = third;
 }
 
-triad::triad(const triad& triad) {
-    first = triad.first;
-    second = triad.second;
-    third = triad.third;
+// triad::triad(const triad& triad) {
+//     first = triad.first;
+//     second = triad.second;
+//     third = triad.third;
+// }
+
+triad::triad(const triad& other)
+{
+this->first = other.first;
+this->second = other.second;
+this->third = other.third;
+}
+
+triad& triad::operator = (const triad& other) {
+  this->first = other.first;
+  this->second = other.second;
+  this->third = other.third;
+  return *this;
 }
 
 void triad::set_first(int e) {
@@ -70,12 +80,25 @@ void triad::set_third(int e) {
     third = e;
 }
 
-triad& triad::operator=(const triad& t) {
-    if (&t == this) return *this;
-    first = t.first;
-    second = t.second;
-    third = t.third;
-    return *this;
+// triad& triad::operator=(const triad& t) {
+//     if (&t == this) return *this;
+//     first = t.first;
+//     second = t.second;
+//     third = t.third;
+//     return *this;
+// }
+
+bool triad::operator==(const triad& other)
+{
+return this->first == other.first && this->second == other.second && this->third == other.third;
+}
+
+
+void triad::set_triad(int first, int second, int third)
+{
+this->first = first;
+this->second = second;
+this->third = third;
 }
 
 istream& operator>>(std::istream& in, triad& t) {
