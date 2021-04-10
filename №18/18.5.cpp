@@ -14,6 +14,7 @@
 #include "triad2.h"
 #include "object.h"
 #include "time2.h"
+#include "vector.h"
 
 int main() {
   Time a;
@@ -34,6 +35,18 @@ int main() {
     if (greater_than == true) std::cout << "\nA > B";
     else std::cout << "\nA < B";
   }
+
+  vector vec(5);
+  triad c;
+  cin >> c;
+
+  Time d;
+  cin >> d;
+  
+  p=&c;
+  vec.add(p);
+  p=&d;
+  vec.add(p);
+  cout << vec;
   return 0;
 }
-
