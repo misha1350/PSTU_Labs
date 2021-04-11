@@ -35,7 +35,6 @@ public:
   array& operator = (const array& arr);
   int& operator[] (int index);
   array operator+(int k);
-  int operator()() const;
   bool operator < (const array& arr);
 
   friend ostream &operator<<(ostream &out, const array &arr);
@@ -88,10 +87,6 @@ array array::operator+(const int k) {
     temp.data[i] = data[i] + k;
   }
   return temp;
-}
-
-int array::operator ()() const {
-  return size;
 }
 
 ostream &operator << (ostream &out, const array &arr) {
