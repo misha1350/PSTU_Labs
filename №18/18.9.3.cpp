@@ -11,7 +11,7 @@
 */
 
 #include "Headers 6-13/error.h"
-#include "Headers 6-13/array9.h"
+#include "Headers 6-13/array9.3.h"
 #include <iostream>
 
 using namespace std;
