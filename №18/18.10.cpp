@@ -18,12 +18,14 @@ using namespace std;
 
 int main()
 {
-  money t;
+  money t, t1, t2;
   char file_name[30];
   int k, c;
   do {
     cout << "\n1. Make file";
     cout << "\n2. Print file";
+    cout << "\n3. Add entry";
+    cout << "\n4. Delete entry";
     cout << "\n0. Exit\n";
     cin >> c;
     switch (c) {
@@ -37,6 +39,29 @@ int main()
         k = print_file(file_name);
         if (k == 0) cout << "\nEmpty file";
         if (k < 0) cout << "\nCan't read file";
+        break;
+      case 3:
+        cout << "\n\tFile name? "; cin >> file_name;
+        int num;
+        cout << "\nNum? "; cin >> num;
+        cout << "\nNew entry: "; cin >> t1;
+        k = add_entry(file_name, num, t1);
+        if (k < 0) cout << "\nCan't read file";
+        if (k == 0) k = add_end(file_name, t1);
+        break;
+      case 4:
+        cout << "\n\tFile name? "; cin >> file_name;
+        cout << "\n\tNum? "; cin >> num;
+        k=del_entry(file_name, num);
+        if (k<0) cout << "nCan't read file";
+        break;
+      case 5:
+        cout << "\n\tFile name? "; cin >> file_name;
+        cout << "\n\tNum? "; cin >> num;
+        cout << "New entry: "; cin >> t2;
+        k = change_entry(file_name, num, t2);
+        if (k < 0) cout << "\nCan't read file";
+        if (k == 0) cout << "\nCan't find entry";
         break;
     }
   }
