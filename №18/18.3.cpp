@@ -5,6 +5,7 @@ using namespace std;
 
 int main()
 {
+  setlocale(LC_ALL, "ru");
   cout << "**18.3** Сложение двух сумм:\n";
     money a;
     money b;
