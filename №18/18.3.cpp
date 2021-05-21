@@ -1,19 +1,20 @@
 #include <iostream>
-#include "money.h"
+#include "Headers/money.h"
 
 using namespace std;
 
-void main()
+int main()
 {
+  cout << "**18.3** Ð¡Ð»Ð¾Ð¶ÐµÐ½Ð¸Ðµ Ð´Ð²ÑƒÑ… ÑÑƒÐ¼Ð¼:\n";
     money a;
     money b;
     money c;
-    cout << "\nÂâåäèòå ðóáëè - "; cin >> a;
-    cout << "\nÂâåäèòå êîïåéêè - "; cin >> b;
+    cin >> a;
+    cin >> b;
     a++;
-    cout << "a+1 êîïåéêà = " << a << endl;
+    cout << "\nÐš ÑÑƒÐ¼Ð¼Ðµ Ð Ð¿Ñ€Ð¸Ð±Ð°Ð²Ð»ÐµÐ½Ð° ÐºÐ¾Ð¿ÐµÐ¹ÐºÐ°: " << a << "\n";
+    cout << "Ð = " << a << endl;
+    cout << "B = " << b << endl;
     c = (a++) + b;
-    cout << "a = " << a << endl;
-    cout << "b = " << b << endl;
-    cout << "c = (a+1 êîïåéêà + b) = " << c << endl;
+    cout << "C = (A + B) = " << c << endl;
 }
