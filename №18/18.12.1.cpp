@@ -1,8 +1,7 @@
 /*
 Вариант  9 (19)
 
-
-Задача 1: (3, 4, 13)
+Задача 1:
 Контейнер - set
 Тип элементов - int
 
@@ -16,15 +15,11 @@
 
 #include <iostream>
 #include <set>
-#include "Headers 6-13/array12.h"
-#include "Headers 6-13/money12.h"
 
 using namespace std;
 
 typedef set <int> Tset;
 set<int>::iterator it;
-// typedef set<money> Tset2;
-// typedef Tset2::iterator it2;
 
 Tset s;
 int n;
@@ -120,23 +115,19 @@ int main()
     cin >> c;
     switch (c)
     {
-      case 1:
-      {
+      case 1: {
           c1();
       }
       break;
-      case 2:
-      {
+      case 2: {
           c2();
       }
       break;
-      case 3:
-      {
+      case 3: {
           c3();
       }
       break;
-      case 4:
-      {
+      case 4: {
           print_set(s);
       }
       break;
