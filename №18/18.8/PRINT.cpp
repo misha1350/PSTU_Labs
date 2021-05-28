@@ -1,31 +1,31 @@
-#include "PRINT.h"
+#include "Print.h"
 #include <iostream>
 #include <string>
 using namespace std;
-PRINT::PRINT()
+Print::Print()
 {
 	name = "";
 	author = "";
 }
-PRINT::PRINT(string name, string author)
+Print::Print(string name, string author)
 {
 	this->name = name;
 	this->author = author;
 }
-PRINT::PRINT(const PRINT& other)
+Print::Print(const Print& other)
 {
 	this->name = other.name;
 	this->author = other.author;
 }
-void PRINT::set_name(string name)
+void Print::set_name(string name)
 {
 	this->name = name;
 }
-void PRINT::set_author(string author)
+void Print::set_author(string author)
 {
 	this->author = author;
 }
-PRINT& PRINT::operator=(const PRINT& other)
+Print& Print::operator=(const Print& other)
 {
 	if (&other == this)
 	{
@@ -35,26 +35,26 @@ PRINT& PRINT::operator=(const PRINT& other)
 	this->author = other.author;
 	return *this;
 }
-void PRINT::Show() 
+void Print::Show() 
 {
 	cout << endl << "name:\t\t" << name;
 	cout << endl << "author:\t\t" << author << endl;
 }
-void PRINT::Input()
+void Print::Input()
 {
 	cout << endl << "name:\t\t";
 	cin >> name;
 	cout << endl << "author:\t\t";
 	cin >> author;
 }
-void PRINT::HandleEvent(const MyEvent& e)
+void Print::HandleEvent(const MyEvent& e)
 {
 	if (e.what == mesEvent)
 	{
 		switch (e.command)
 		{
 		case cmGet:
-			cout << "Èìÿ: " << get_name() << endl;
+			cout << "Ð˜Ð¼Ñ: " << get_name() << endl;
 			break;
 		default:
 			break;
