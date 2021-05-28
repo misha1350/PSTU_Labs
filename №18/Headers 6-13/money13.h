@@ -72,11 +72,6 @@ bool money:: operator == (const money& t)
     return this->ruble == t.ruble && this->kopeck == t.kopeck;
 }
 
-// bool money:: operator == (const money& other)
-// {
-//     return this->ruble == other.ruble && this->kopeck == other.kopeck;
-// }
-
 money& money::operator=(const money& t)
 {
 
@@ -129,16 +124,6 @@ money money :: operator /(const int value)
     tmp.kopeck = this->kopeck;
     return tmp;
 }
-
-// money money::operator / (const money& t)
-// {
-//   long temp3 = ruble * 100 + kopeck;
-//   money div;
-//   div.ruble = temp3 / 200;
-//   div.kopeck = temp3 % 100;
-//   div.kopeck = temp3 / 2;
-// 	return div;
-// }
 
 istream& operator>> (istream& in, money& t)
 {
