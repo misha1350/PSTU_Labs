@@ -21,8 +21,8 @@
 
 #include <iostream>
 #include <string>
-#include "PRINT.h"
-#include "BOOK.h"
+#include "Print.h"
+#include "Book.h"
 #include "List.h"
 #include "Dialog.h"
 using namespace std;
