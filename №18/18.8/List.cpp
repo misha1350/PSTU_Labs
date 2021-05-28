@@ -1,8 +1,8 @@
 #include "List.h"
 #include <iostream>
 #include <string>
-#include "PRINT.h"
-#include "BOOK.h"
+#include "Print.h"
+#include "Book.h"
 using namespace std;
 int SafeInput1(bool strict)
 {
@@ -10,7 +10,7 @@ int SafeInput1(bool strict)
 	while (!(cin >> result) || (cin.peek() != '\n') || (strict && result <= 0)) {
 		cin.clear();
 		while (cin.get() != '\n');
-		cout << "Ââåäèòå êîððåêòíîå ÷èñëî!" << endl;
+		cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ÐºÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð½Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾!" << endl;
 	}
 	cin.get();
 	return result;
@@ -32,19 +32,19 @@ List::List(int size)
 void List::pushB()
 {
 	Obj* p;
-	cout << "1) PRINT\t2)BOOK\n";
-	int ch = 0;
+	cout << "1) Print\t2)Book\n";
+	int ch = 0;O
 	while (ch!=1&&ch!=2)
 	{
 		ch = SafeInput1(1);
 		if (ch <= 0 && ch >= 3)
 		{
-			cout << "Ââåäèòå êîððåêòíîå ÷èñëî!" << endl;
+			cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ÐºÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð½Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾!" << endl;
 		}
 	}
 	if (ch == 1)
 	{
-		PRINT* tmp = new(PRINT);
+		Print* tmp = new(Print);
 		tmp->Input();
 		p = tmp;
 		if (pos < size)
@@ -55,13 +55,13 @@ void List::pushB()
 		}
 		else
 		{
-			cout << "\nÎøèáêà!\n";
+			cout << "\nÐžÑˆÐ¸Ð±ÐºÐ°!\n";
 			return;
 		}
 	}
 	else
 	{
-		BOOK* tmp = new(BOOK);
+		Book* tmp = new(Book);
 		tmp->Input();
 		p = tmp;
 		if (pos < size)
@@ -72,7 +72,7 @@ void List::pushB()
 		}
 		else
 		{
-			cout << "\nÎøèáêà!\n";
+			cout << "\nÐžÑˆÐ¸Ð±ÐºÐ°!\n";
 			return;
 		}
 	}
@@ -81,7 +81,7 @@ void List::show()
 {
 	if (size==0)
 	{
-		cout << "\nÑïèñîê ïóñò!\n";
+		cout << "\nÃ‘Ã¯Ã¨Ã±Ã®Ãª Ã¯Ã³Ã±Ã²!\n";
 	}
 	else
 	{
@@ -102,7 +102,7 @@ void List::pushB(Obj* p)
 	}
 	else
 	{
-		cout << "\nÎøèáêà!\n";
+		cout << "\nÐžÑˆÐ¸Ð±ÐºÐ°!\n";
 		return;
 	}
 }
@@ -110,7 +110,7 @@ void List::del()
 {
 	if (size==0)
 	{
-		cout << "\nÑïèñîê ïóñò!\n";
+		cout << "\Ð¡Ð¿Ð¸ÑÐ¾Ðº Ð¿ÑƒÑÑ‚.\n";
 	}
 	pos--;
 	size--;
