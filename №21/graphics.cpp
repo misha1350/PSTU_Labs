@@ -12,8 +12,17 @@ using namespace std;
 
 const int V = 6;
 const int start = 0;
-const int finish = 5;
 const int MAX = 999990;
+
+int adjacensyMatrix[V][V] =
+{
+    { 0, 28, 13, 15, 0, 18 },
+    { 28,  0, 0,  20,  21, 0 },
+    { 13,   0,  0, 0,  30, 0 },
+    { 15,   20,   0,   0, 39, 31},
+    { 30,   21,   0,   39, 0, 0 },
+    { 18,   0,    0,   31,   0, 0 }
+};
 
 void Dijkstra(int GR[V][V])//алгоритм Дейкстры
 {
@@ -93,187 +102,9 @@ void Dijkstra(int GR[V][V])//алгоритм Дейкстры
 
 }
 
-int main()
-{
-    setlocale(LC_ALL, "Rus");
-//    int GR[V][V] = {
-//        { 0, 4, 2, 0, 0, 0 },
-//        { 0, 0, 5, 10, 0, 0 },
-//        { 0, 0, 0, 0, 3, 0 },
-//        { 0, 0, 0, 0, 0, 11 },
-//        { 0, 0, 0, 4, 0, 0 },
-//        { 0, 0, 0, 0, 0, 0 } };
-    int adjacensyMatrix[V][V] =
-    {
-        { 0, 28, 13, 15, 0, 18 },
-        { 28,  0, 0,  20,  21, 0 },
-        { 13,   0,  0, 0,  30, 0 },
-        { 15,   20,   0,   0, 39, 31},
-        { 30,   21,   0,   39, 0, 0 },
-        { 18,   0,    0,   31,   0, 0 }
-    };
-
-    return 0;
-}
-
-// number of total nodes
-const int N = 6;
-const int INF = MAX;
-
-int adjacensyMatrix[N][N] =
-{
-    { INF, 28, 13, 15, INF, 18 },
-    { 28,  INF, INF,  20,  21, INF },
-    { 13,   INF,  INF, INF,  30, INF },
-    { 15,   20,   INF,   INF, 39, 31},
-    { 30,   21,   INF,   39, INF, INF },
-    { 18,   INF,    INF,   31,   INF, INF }
-};
 int final_min;
 QString final_path;
 bool was_drawn;
-class Logic
-{
-public:
-    vector<pair<int, int>> path;
-    int matrix_reduced[N][N];
-    int cost;
-    int vertex;
-    int level;
-};
-
-void ReduceRow(int matrix_reduced[N][N], int row[N])
-{
-    fill_n(row, N, INF);
-
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < N; j++) {
-            if (matrix_reduced[i][j] < row[i])
-                row[i] = matrix_reduced[i][j];
-        }
-    }
-
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < N; j++) {
-            if (matrix_reduced[i][j] != INF && row[i] != INF)
-                matrix_reduced[i][j] -= row[i];
-        }
-    }
-}
-
-void ReduceColumn(int matrix_reduced[N][N], int column[N])
-{
-    fill_n(column, N, INF);
-
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < N; j++) {
-            if (matrix_reduced[i][j] < column[j])
-                column[j] = matrix_reduced[i][j];
-        }
-    }
-
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < N; j++) {
-            if (matrix_reduced[i][j] != INF && column[j] != INF)
-                matrix_reduced[i][j] -= column[j];
-        }
-    }
-}
-
-int CostCalc(int matrix_reduced[N][N])
-{
-    int cost = 0;
-
-    int row[N];
-    ReduceRow(matrix_reduced, row);
-
-    int column[N];
-    ReduceColumn(matrix_reduced, column);
-
-    for (int i = 0; i < N; i++)
-        cost += (row[i] != MAX) ? row[i] : 0,
-            cost += (column[i] != MAX) ? column[i] : 0;
-    return cost;
-}
-
-Logic* NewNode(int matrix_parent[N][N], vector<pair<int, int>> const &path,int level, int i, int j)
-{
-    Logic* node = new Logic;
-    node->path = path;
-    if (level != 0)
-        node->path.push_back(make_pair(i, j));
-    memcpy(node->matrix_reduced, matrix_parent,
-        sizeof node->matrix_reduced);
-    for (int k = 0; level != 0 && k < N; k++)
-    {
-        node->matrix_reduced[i][k] = INF;
-        node->matrix_reduced[k][j] = INF;
-    }
-
-    node->matrix_reduced[j][0] = INF;
-    node->level = level;
-    node->vertex = j;
-    return node;
-}
-
-void PrintPath(vector<pair<int, int>> const &list)
-{
-    for (int i = 0; i < list.size(); i++) {
-//        qInfo() << list[i].first + 1 << "->"
-//             << list[i].second + 1;
-        if (final_path.isEmpty()) {
-//            path.append(QString::number(list[i].first+1));
-            final_path.append(QString::number(list[i].first+1));
-        }
-//        path.append(QString::number(list[i].second+1));
-        final_path.append("->");
-        final_path.append(QString::number(list[i].second+1));
-    }
-}
-
-class comp {
-public:
-    bool operator()(const Logic* lhs, const Logic* rhs) const
-    {
-        return lhs->cost > rhs->cost;
-    }
-};
-
-int solve(int adjacensyMatrix[N][N])
-{
-    priority_queue<Logic*, vector<Logic*>, comp> pq;
-    vector<pair<int, int>> Pair;
-    Logic* root = NewNode(adjacensyMatrix, Pair, 0, -1, 0);
-    root->cost = CostCalc(root->matrix_reduced);
-    pq.push(root);
-    while (!pq.empty())
-    {
-        Logic* min = pq.top();
-        pq.pop();
-        int i = min->vertex;
-        if (min->level == N - 1)
-        {
-            min->path.push_back(make_pair(i, 0));
-            PrintPath(min->path);
-            final_min = min->cost;
-            return min->cost;
-        }
-
-        for (int j = 0; j < N; j++)
-        {
-            if (min->matrix_reduced[i][j] != INF)
-            {
-                Logic* child = NewNode(min->matrix_reduced, min->path,
-                    min->level + 1, i, j);
-
-                child->cost = min->cost + min->matrix_reduced[i][j]
-                            + CostCalc(child->matrix_reduced);
-                pq.push(child);
-            }
-        }
-        delete min;
-    }
-}
 
 Graphics::Graphics(QWidget *parent)
     : QMainWindow(parent)
@@ -358,13 +189,6 @@ void MyPoint::paint(QPainter *draw, const QStyleOptionGraphicsItem *option, QWid
 void Graphics::on_pushButton_clicked()
 {
     Dijkstra(adjacensyMatrix);
-//    solve(adjacensyMatrix);
-//    qInfo() << final_min;
-//    qInfo() << final_path;
-//    QMessageBox::information(this, "Значения", "Рассчитано с предопределёнными значениями.\n\t"
-//                                   "Города: " +final_path+ "\n\tМинимальная общая длина: " +QString::number(final_min), "Понял");
-//    ui->path->setText("Путь: " +final_path+ "\nS=" +QString::number(final_min));
-//    ui->path->show();
     final_path.clear();
     was_drawn = true;
 }
