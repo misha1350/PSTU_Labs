@@ -12,6 +12,7 @@ using namespace std;
 
 int main()
 {
+    setlocale(LC_ALL, "ru");
     btree t;
     int n;
 
@@ -27,5 +28,5 @@ int main()
     }
 
     t.print();
-    t.kol();
+    t.amount();
 }
