@@ -1,5 +1,7 @@
 #pragma once
 #include <iostream>
+#include <time.h>
+#include <math.h>
 using namespace std;
 
 /*
@@ -41,8 +43,8 @@ public:
 	money& operator++();
 	money operator++(int); 
 	money operator+(const money&);
+	money operator +(const money& other) const;
   money operator+=(const money&);
-  // money operator/(const money&);
   money operator /(const int value);
   bool operator<(const money&) const;
   bool operator>(const money&) const;
@@ -110,6 +112,20 @@ money money::operator+ (const money& t)
 	add.kopeck = (temp1 + temp2) % 100;
 	return add;
 }
+money money:: operator +(const money& t) const
+{
+    money tmp;
+    int temp_kop = 0, temp_rub = 0;
+    tmp.kopeck = this->kopeck + t.kopeck;
+    if (tmp.kopeck >= 100)
+    {
+        temp_rub = tmp.kopeck / 100;
+        temp_kop = tmp.kopeck - temp_rub * 100;
+        tmp.kopeck = temp_kop;
+    }
+    tmp.ruble = this->ruble + t.ruble + temp_rub;
+    return tmp;
+}
 
 money money::operator+= (const money &t) {
   this->ruble += t.ruble;
@@ -124,6 +140,7 @@ money money :: operator /(const int value)
     tmp.kopeck = this->kopeck;
     return tmp;
 }
+
 
 istream& operator>> (istream& in, money& t)
 {
