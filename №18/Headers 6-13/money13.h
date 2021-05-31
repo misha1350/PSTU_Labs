@@ -37,14 +37,14 @@ public:
 		kopeck = b;
 	}
   
-  money();
+  	money();
 	bool operator == (const money&);
-  bool operator != (const money&);
+ 	 bool operator != (const money&);
 	money& operator=(const money&);
 	money& operator++();
 	money operator++(int); 
 	money operator+(const money&);
-  // money operator +(const money& other);
+  	// money operator +(const money& other);
 	money operator +(const money& other) const;
   money operator+=(const money&);
   money operator /(const int value);
@@ -157,16 +157,6 @@ money money :: operator /(const int value)
     tmp.kopeck = this->kopeck;
     return tmp;
 }
-
-// money money::operator / (const money& t)
-// {
-//   long temp3 = ruble * 100 + kopeck;
-//   money div;
-//   div.ruble = temp3 / 200;
-//   div.kopeck = temp3 % 100;
-//   div.kopeck = temp3 / 2;
-// 	return div;
-// }
 
 istream& operator>> (istream& in, money& t)
 {
