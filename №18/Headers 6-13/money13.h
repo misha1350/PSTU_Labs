@@ -14,9 +14,9 @@ using namespace std;
 class money {
 	long ruble; int kopeck;
 public:
-	money() {
-		ruble = 0; kopeck = 0;
-	};
+	// money() {
+	// 	ruble = 0; kopeck = 0;
+	// };
 	money(long a, int b) {
 		ruble = a; kopeck = b;
 	}
@@ -37,12 +37,14 @@ public:
 		kopeck = b;
 	}
   
-
+  money();
 	bool operator == (const money&);
+  bool operator != (const money&);
 	money& operator=(const money&);
 	money& operator++();
 	money operator++(int); 
 	money operator+(const money&);
+  // money operator +(const money& other);
 	money operator +(const money& other) const;
   money operator+=(const money&);
   money operator /(const int value);
@@ -53,6 +55,16 @@ public:
 	friend ostream& operator<< (ostream& out, const money& t);
 };
 
+
+int random1(long c, int d)
+{
+    if (c > 0) return c + rand() % (d - c);
+    else return c + rand() % (abs(c) + d);
+}
+money::money() {
+  ruble = random1 (1, 100);
+  kopeck = random1 (0, 99);
+}
 bool money::operator < (const money& t) const
 {
     if (this->ruble < t.ruble)
@@ -72,6 +84,11 @@ bool money::operator > (const money& t) const
 bool money:: operator == (const money& t)
 {
     return this->ruble == t.ruble && this->kopeck == t.kopeck;
+}
+
+bool money:: operator != (const money& t)
+{
+    return !(this->ruble == t.ruble && this->kopeck == t.kopeck);
 }
 
 money& money::operator=(const money& t)
@@ -141,6 +158,15 @@ money money :: operator /(const int value)
     return tmp;
 }
 
+// money money::operator / (const money& t)
+// {
+//   long temp3 = ruble * 100 + kopeck;
+//   money div;
+//   div.ruble = temp3 / 200;
+//   div.kopeck = temp3 % 100;
+//   div.kopeck = temp3 / 2;
+// 	return div;
+// }
 
 istream& operator>> (istream& in, money& t)
 {
