@@ -41,7 +41,7 @@ public:
 		root = insert(root, element);
 	}
 	void print();
-	void kol();
+	void amount();
 };
 
 btree::btree()
