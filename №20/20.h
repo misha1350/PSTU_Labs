@@ -54,7 +54,7 @@ void btree::print()
 	print(root);
 }
 
-void btree::kol()
+void btree::amount()
 {
-	cout << endl << "Kol: " << k << endl;
+	cout << endl << "Количество ветвей: " << k << endl;
 }
